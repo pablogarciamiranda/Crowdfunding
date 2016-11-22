@@ -3,16 +3,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.JoinColumn;
-import javax.persistence.UniqueConstraint;
 
 
 @Entity
@@ -22,21 +19,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="users_projects", 
-			uniqueConstraints = {
-	            	@UniqueConstraint(name = "user_project_unique", columnNames = {"user_id", "project_id"})
-	        },
-			joinColumns = {
-				 	@JoinColumn(name="user_id", referencedColumnName="id")
-			},
-			inverseJoinColumns = {
-					@JoinColumn(name="project_id", referencedColumnName="id")
-					}
-	)
+	@ManyToMany(mappedBy="owners", cascade=CascadeType.ALL)
 	private Collection<Project> projects_owned;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(mappedBy = "user")
 	private Collection<Pledge> pledges;
 	
 	private String username;

@@ -8,13 +8,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.CascadeType;
 
 @Entity
 public class Project {
@@ -23,17 +21,28 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@ManyToMany(fetch=FetchType.EAGER, mappedBy="projects_owned", cascade=CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name="projects_owners", 
+			uniqueConstraints = {
+	            	@UniqueConstraint(name = "project_user_unique", columnNames = {"project_id", "user_id"})
+	        },
+			joinColumns = {
+				 	@JoinColumn(name="project_id", referencedColumnName="id")
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name="user_id", referencedColumnName="id")
+					}
+	)
 	private Collection<User> owners;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+	@OneToMany(mappedBy = "project")
 	private Collection<Reward> rewards;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="category_id")
 	private Category category;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name="projects_tags", 
 			uniqueConstraints = {
 	            	@UniqueConstraint(name = "project_tag_unique", columnNames = {"project_id", "tag_id"})
@@ -56,7 +65,7 @@ public class Project {
 	private double fundingAmount;
 	private int numberOfDays;
 	
-	public Project(int id, List<User> owners, Collection<Reward> rewards, Category category, Collection<Tag> tags, String name,
+	public Project(int id, Collection<User> owners, Collection<Reward> rewards, Category category, Collection<Tag> tags, String name,
 			String location, String description, byte[] picture, double currentAmount, double fundingAmount,
 			int numberOfDays) {
 		super();
