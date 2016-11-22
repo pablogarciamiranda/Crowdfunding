@@ -11,6 +11,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
+import javax.persistence.UniqueConstraint;
+
 
 @Entity
 public class User {
@@ -24,8 +26,16 @@ public class User {
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="users_projects", 
-		joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-		inverseJoinColumns={@JoinColumn(name="project_id", referencedColumnName="id")})
+			uniqueConstraints = {
+	            	@UniqueConstraint(name = "user_project_unique", columnNames = {"user_id", "project_id"})
+	        },
+			joinColumns = {
+				 	@JoinColumn(name="user_id", referencedColumnName="id")
+			},
+			inverseJoinColumns = {
+					@JoinColumn(name="project_id", referencedColumnName="id")
+					}
+	)
 	private List<Project> projects_owned;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
