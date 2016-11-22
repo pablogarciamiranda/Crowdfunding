@@ -20,60 +20,42 @@ public class Pledge {
 	private User user;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="project_id")
-	private Project project;
+	@JoinColumn(name="reward_id")
+	private Reward reward;
 	
-	private int amount;
-	
-	public Pledge(int id, User user, Project project, int amount) {
+	public Pledge(int id, User user, Reward reward) {
 		super();
 		this.id = id;
 		this.user = user;
-		this.project = project;
-		this.amount = amount;
+		this.reward = reward;
 	}
 
 	public Pledge() {
 		super();
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Pledge [id=");
-		builder.append(id);
-		builder.append(", user=");
-		builder.append(user);
-		builder.append(", project=");
-		builder.append(project);
-		builder.append(", amount=");
-		builder.append(amount);
-		builder.append("]");
-		return builder.toString();
+	public int getId() {
+		return id;
 	}
-	
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public User getUser() {
 		return user;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	public Project getProject() {
-		return project;
-	}
-	
-	public void setProject(Project project) {
-		this.project = project;
+
+	public Reward getReward() {
+		return reward;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-	
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setReward(Reward reward) {
+		this.reward = reward;
 	}
 
 }

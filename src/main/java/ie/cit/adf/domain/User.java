@@ -1,5 +1,6 @@
 package ie.cit.adf.domain;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -20,9 +21,6 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String name;
-	private char[] password;
-	private double creditLimit;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="users_projects", 
@@ -36,45 +34,39 @@ public class User {
 					@JoinColumn(name="project_id", referencedColumnName="id")
 					}
 	)
-	private List<Project> projects_owned;
+	private Collection<Project> projects_owned;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-	private List<Pledge> pledges;
+	private Collection<Pledge> pledges;
 	
-	public User(int userId, String name, char[] password, double creditLimit, List<Project> projects_owned,
-			List<Pledge> pledges) {
+	private String username;
+	private char[] password;
+	
+	private String name;
+	private String location;
+	private String biography;
+	private String email;
+	private double creditLimit;
+
+	public User(int id, String username, char[] password, String name, String location, String biography, String email,
+			double creditLimit, Collection<Project> projects_owned, Collection<Pledge> pledges) {
 		super();
-		this.id = userId;
-		this.name = name;
+		this.id = id;
+		this.username = username;
 		this.password = password;
+		this.name = name;
+		this.location = location;
+		this.biography = biography;
+		this.email = email;
 		this.creditLimit = creditLimit;
 		this.projects_owned = projects_owned;
 		this.pledges = pledges;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [id=");
-		builder.append(id);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", password=");
-		builder.append(Arrays.toString(password));
-		builder.append(", creditLimit=");
-		builder.append(creditLimit);
-		builder.append(", projects_owned=");
-		builder.append(projects_owned);
-		builder.append(", pledges=");
-		builder.append(pledges);
-		builder.append("]");
-		return builder.toString();
-	}
-
 	public User() {
 		super();
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -83,12 +75,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public char[] getPassword() {
@@ -99,6 +91,38 @@ public class User {
 		this.password = password;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getBiography() {
+		return biography;
+	}
+
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public double getCreditLimit() {
 		return creditLimit;
 	}
@@ -107,7 +131,7 @@ public class User {
 		this.creditLimit = creditLimit;
 	}
 
-	public List<Project> getProjects_owned() {
+	public Collection<Project> getProjects_owned() {
 		return projects_owned;
 	}
 
@@ -115,7 +139,7 @@ public class User {
 		this.projects_owned = projects_owned;
 	}
 
-	public List<Pledge> getPledges() {
+	public Collection<Pledge> getPledges() {
 		return pledges;
 	}
 
@@ -123,4 +147,31 @@ public class User {
 		this.pledges = pledges;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [id=");
+		builder.append(id);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", password=");
+		builder.append(Arrays.toString(password));
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", location=");
+		builder.append(location);
+		builder.append(", biography=");
+		builder.append(biography);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", creditLimit=");
+		builder.append(creditLimit);
+		builder.append(", projects_owned=");
+		builder.append(projects_owned);
+		builder.append(", pledges=");
+		builder.append(pledges);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }
