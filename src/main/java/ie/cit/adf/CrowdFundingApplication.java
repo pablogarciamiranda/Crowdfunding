@@ -8,6 +8,6 @@ public class CrowdFundingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CrowdFundingApplication.class, args);
-		System.out.println("Juanker is alive!");
+		System.out.println("This is a test sentence!");
 	}
 }
