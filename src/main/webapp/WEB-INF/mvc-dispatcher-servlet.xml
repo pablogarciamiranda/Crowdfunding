@@ -4,7 +4,7 @@
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	
 	<!-- Register the bean -->
-	<bean class="com.main.MainController" />
+	<bean class="ie.cit.adf.controllers.MainController" />
 
 	<!-- Register the welcome.properties -->
 	<bean id="messageSource"
@@ -14,10 +14,11 @@
 	</bean>
 
 	<mvc:interceptors>
-		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"> <property name="paramName" value="lang" />
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="lang" />
 		</bean>
 	</mvc:interceptors>
-
+	
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
 
 </beans>
