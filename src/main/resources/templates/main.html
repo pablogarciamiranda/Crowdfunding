@@ -5,10 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <p th:text="#{main.hello} + ', ' + ${name} + '!'" />
-    
-    <p>
-	<a href="/?lang=FR">French</a> | <a href="/?lang=EN">English</a>
+	<p>
+		<a href="/?lang=FR">French</a> | <a href="/?lang=EN">English</a>
 	</p>
+	
+    <p th:text="#{main.hello} + ', ' + ${name}"/>
+    
 </body>
 </html>

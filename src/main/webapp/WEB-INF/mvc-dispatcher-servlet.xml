@@ -21,4 +21,23 @@
 	
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
 
+	<security:http use-expressions="true">
+		<security:form-login login-page="/WEB-INF/views/login.jsp" />
+		<security:intercept-url pattern="/account/edit*" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/accounts/account*" access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/accounts/**" access="isAuthenticated()" />
+		<security:logout />
+	</security:http>
+	
+	<security:authentification-manager>
+		<security:authentication-provider>
+			<security:user-service properties="/WEB-INF/users.properties" />
+		</security:authentication-provider>
+	</security:authentification-manager>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	    <property name="prefix" value="/WEB-INF/views/"/>
+	    <property name="suffix" value=".jsp"/>
+	</bean>
+
 </beans>
