@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ie.cit.adf.domain.Project;
 import ie.cit.adf.domain.User;
 import ie.cit.adf.repositories.UserRepository;
 
@@ -31,5 +32,9 @@ public class UserService {
 	
 	public Collection<User> findAll(){
 		return (Collection<User>) userRepository.findAll();
+	}
+	
+	public Collection<User> findOwners(Project project){
+		return userRepository.findAllByProject();
 	}
 }
