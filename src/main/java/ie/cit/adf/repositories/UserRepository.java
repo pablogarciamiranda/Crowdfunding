@@ -7,5 +7,8 @@ import ie.cit.adf.domain.User;
 
 @Repository
 public interface UserRepository extends CrudRepository <User,Integer> {
+	
+	User findByName(String name);
+	User findByEmail(String email);
 
 }
