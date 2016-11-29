@@ -1,6 +1,6 @@
 CREATE TABLE project ( 
   id int(11) NOT NULL AUTO_INCREMENT,
-  id_project int(11) NOT NULL,
+  id_category int(11) NOT NULL,
   name varchar(32) NOT NULL, 
   location varchar(32) NOT NULL, 
   description varchar(240), 
