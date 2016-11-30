@@ -34,7 +34,7 @@ public class UserService {
 		return (Collection<User>) userRepository.findAll();
 	}
 	
-	public Collection<User> findOwners(Project project){
-		return userRepository.findAllByProject();
-	}
+//	public Collection<User> findOwners(Project project){
+//		return userRepository.findAllByProject();
+//	}
 }

@@ -17,8 +17,8 @@ public class TagService {
 		return (Collection<Tag>) tagRepository.findAll();
 	}
 	
-	public Collection<Tag> findAllByProject(Project project){
-		return tagRepository.findAllByProject(project);
-		
-	}
+//	public Collection<Tag> findAllByProject(Project project){
+//		return tagRepository.findAllByProject(project);
+//		
+//	}
 }

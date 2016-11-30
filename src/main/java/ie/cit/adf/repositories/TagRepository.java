@@ -9,6 +9,6 @@ import ie.cit.adf.domain.Tag;
 
 public interface TagRepository extends CrudRepository<Tag, Integer> {
 
-	List<Tag> findAllByProject(Project project);
+	//List<Tag> findAllByProject(Project project);
 
 }

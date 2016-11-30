@@ -17,8 +17,8 @@ public class ProjectService {
 		return (Collection<Project>) projectRepository.findAll();
 	}
 	
-	public Collection<Project> findProjectsOwned(User user){
-		return projectRepository.findAllByUser(user);
-	}
+//	public Collection<Project> findProjectsOwned(User user){
+//		return projectRepository.findAllByUser(user);
+//	}
 	
 }
