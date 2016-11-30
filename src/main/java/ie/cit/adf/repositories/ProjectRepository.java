@@ -9,7 +9,7 @@ import ie.cit.adf.domain.User;
 
 public interface ProjectRepository extends CrudRepository<Project, Integer>{
 
-	Collection<Project> findAllByUser(User user);
+	//Collection<Project> findAllByUser(User user);
 	
 	
 

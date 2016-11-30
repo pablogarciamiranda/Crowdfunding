@@ -35,7 +35,7 @@ VALUES
 	
 INSERT INTO reward (id, id_project, name, amount, description, estimatedDelivery, limitAvailability)
 VALUES
-	(1, 1, 'Basic', 50, 'Basic features', 25, 0),
-	(2, 1, 'Premium', 350, 'Advanced features', 30, 1);
+	(1, 1, 'Basic', 50, 'Basic features', CURRENT_TIMESTAMP, 0),
+	(2, 1, 'Premium', 350, 'Advanced features', CURRENT_TIMESTAMP, 1);
 	
 	
