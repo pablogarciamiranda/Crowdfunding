@@ -3,12 +3,15 @@ package ie.cit.adf.domain;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity(name="Tags")
 public class Tag {
@@ -17,7 +20,8 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@ManyToMany(mappedBy="tags", cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="tags", fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Project> projects;
 	
 	private String name;
@@ -62,8 +66,6 @@ public class Tag {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Tag [id=");
 		builder.append(id);
-		builder.append(", projects=");
-		builder.append(projects);
 		builder.append(", name=");
 		builder.append(name);
 		builder.append("]");

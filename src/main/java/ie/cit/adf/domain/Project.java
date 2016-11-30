@@ -5,10 +5,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +27,8 @@ public class Project {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinTable(name="projects_owners", 
 			uniqueConstraints = {
 	            	@UniqueConstraint(name = "project_user_unique", columnNames = {"id_project", "id_user"})
@@ -37,13 +43,15 @@ public class Project {
 	private Collection<User> owners;
 	
 	@OneToMany(mappedBy = "project")
+	@Fetch(FetchMode.SELECT)
 	private Collection<Reward> rewards;
 	
 	@ManyToOne
 	@JoinColumn(name="id_category")
 	private Category category;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinTable(name="projects_tags", 
 			uniqueConstraints = {
 	            	@UniqueConstraint(name = "project_tag_unique", columnNames = {"id_project", "id_tag"})
@@ -191,15 +199,9 @@ public class Project {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Project [id=");
 		builder.append(id);
-		builder.append(", owners=");
-		builder.append(owners);
-		builder.append(", rewards=");
-		builder.append(rewards);
 		builder.append(", category=");
-		builder.append(category);
-		builder.append(", tags=");
-		builder.append(tags);
-		builder.append(", name=");
+		builder.append(category.getName());
+		builder.append("), name=");
 		builder.append(name);
 		builder.append(", location=");
 		builder.append(location);

@@ -3,14 +3,17 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 @Entity(name="Users")
@@ -20,10 +23,12 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@ManyToMany(mappedBy="owners", cascade=CascadeType.ALL)
+	@ManyToMany(mappedBy="owners", fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Project> projects_owned;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Pledge> pledges;
 	
 	private String username;
@@ -154,10 +159,6 @@ public class User {
 		builder.append(email);
 		builder.append(", creditLimit=");
 		builder.append(creditLimit);
-		builder.append(", projects_owned=");
-		builder.append(projects_owned);
-		builder.append(", pledges=");
-		builder.append(pledges);
 		builder.append("]");
 		return builder.toString();
 	}

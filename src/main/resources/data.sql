@@ -15,9 +15,9 @@ INSERT INTO Projects (id, id_category, name, location, description, fundingAmoun
 VALUES 
 	(1, 1, 'OnePlus 4', 'Cork', 'Test', 5000, 50);
 	
-INSERT INTO Users (id, username, password, location, biography, email, creditLimit)
+INSERT INTO Users (id, username, password, name, location, biography, email, creditLimit)
 VALUES
-	(1, 'pablogarciamir', '123456', 'Grao', 'Test', 'pablo.garcia-miranda@mycit.ie', 100);
+	(1, 'pablogarciamir', '123456', 'Pablo García','Grao', 'Test', 'pablo.garcia-miranda@mycit.ie', 100);
 	
 INSERT INTO projects_owners (id_user, id_project)
 VALUES

@@ -11,6 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity(name="Categories")
 public class Category {
 	
@@ -18,7 +21,8 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
+	@OneToMany(mappedBy = "category", fetch=FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Project> projects;
 	
 	private String name;
@@ -83,8 +87,11 @@ public class Category {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Category [id=");
 		builder.append(id);
-		builder.append(", projects=");
+		builder.append(", projects=");	//There is a exception because of toString() method recursive call
 		builder.append(projects);
+		for (Project project : projects){
+			project.getName();
+		}
 		builder.append(", name=");
 		builder.append(name);
 		builder.append(", description=");

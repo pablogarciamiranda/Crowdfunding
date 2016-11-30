@@ -107,8 +107,8 @@ public class Reward {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Reward [id=");
 		builder.append(id);
-		builder.append(", project=");
-		builder.append(project);
+//		builder.append(", project="); 	//There is a exception because of toString() method recursive call
+//		builder.append(project);
 		builder.append(", name=");
 		builder.append(name);
 		builder.append(", amount=");

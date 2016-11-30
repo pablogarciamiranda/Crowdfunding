@@ -1,7 +1,6 @@
 package ie.cit.adf.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,11 +14,11 @@ public class Pledge {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="id_user")
 	private User user;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="id_reward")
 	private Reward reward;
 	
@@ -56,6 +55,19 @@ public class Pledge {
 
 	public void setReward(Reward reward) {
 		this.reward = reward;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pledge [id=");
+		builder.append(id);
+		builder.append(", user=");
+		builder.append(user.getName());
+		builder.append(", reward=");
+		builder.append(reward.getName());
+		builder.append("]");
+		return builder.toString();
 	}
 
 }
