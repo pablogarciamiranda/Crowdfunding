@@ -18,7 +18,7 @@ CREATE TABLE project (
   PRIMARY KEY (id) 
 );
 
-CREATE TABLE user ( 
+CREATE TABLE Users ( 
   id int(11) NOT NULL AUTO_INCREMENT,
   username varchar(16) NOT NULL, 
   password varchar(16) NOT NULL, 
@@ -26,8 +26,14 @@ CREATE TABLE user (
   biography varchar(240),
   email varchar(32) NOT NULL,
   creditLimit float NOT NULL,
+  enable boolean NOT NULL,
   PRIMARY KEY (id) 
 );
+
+CREATE TABLE Authorities (
+	username varchar(16) NOT NULL,
+	authority varchar(16) NOT NULL
+)
 
 CREATE TABLE tag (
   id int(11) NOT NULL AUTO_INCREMENT,
