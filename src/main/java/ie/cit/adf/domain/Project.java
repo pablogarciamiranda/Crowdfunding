@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -24,13 +25,13 @@ public class Project {
 	@ManyToMany
 	@JoinTable(name="projects_owners", 
 			uniqueConstraints = {
-	            	@UniqueConstraint(name = "project_user_unique", columnNames = {"project_id", "user_id"})
+	            	@UniqueConstraint(name = "project_user_unique", columnNames = {"id_project", "id_user"})
 	        },
 			joinColumns = {
-				 	@JoinColumn(name="project_id", referencedColumnName="id")
+				 	@JoinColumn(name="id_project", referencedColumnName="id")
 			},
 			inverseJoinColumns = {
-					@JoinColumn(name="user_id", referencedColumnName="id")
+					@JoinColumn(name="id_user", referencedColumnName="id")
 					}
 	)
 	private Collection<User> owners;
@@ -39,19 +40,19 @@ public class Project {
 	private Collection<Reward> rewards;
 	
 	@ManyToOne
-	@JoinColumn(name="category_id")
+	@JoinColumn(name="id_category")
 	private Category category;
 	
 	@ManyToMany
 	@JoinTable(name="projects_tags", 
 			uniqueConstraints = {
-	            	@UniqueConstraint(name = "project_tag_unique", columnNames = {"project_id", "tag_id"})
+	            	@UniqueConstraint(name = "project_tag_unique", columnNames = {"id_project", "id_tag"})
 	        },
 			joinColumns = {
-				 	@JoinColumn(name="project_id", referencedColumnName="id")
+				 	@JoinColumn(name="id_project", referencedColumnName="id")
 			},
 			inverseJoinColumns = {
-					@JoinColumn(name="tag_id", referencedColumnName="id")
+					@JoinColumn(name="id_tag", referencedColumnName="id")
 					}
 	)
 	private Collection<Tag> tags;
@@ -62,7 +63,9 @@ public class Project {
 	private byte[] picture;
 	
 	private double currentAmount;
+	@Column(name="fundingamount")
 	private double fundingAmount;
+	@Column(name="numberofdays")
 	private int numberOfDays;
 	
 	public Project(int id, Collection<User> owners, Collection<Reward> rewards, Category category, Collection<Tag> tags, String name,

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,6 +33,7 @@ public class User {
 	private String location;
 	private String biography;
 	private String email;
+	@Column(name="creditlimit")
 	private double creditLimit;
 
 	public User(int id, String username, char[] password, String name, String location, String biography, String email,

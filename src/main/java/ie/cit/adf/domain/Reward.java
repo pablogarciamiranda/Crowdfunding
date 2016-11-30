@@ -1,5 +1,6 @@
 package ie.cit.adf.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,14 +18,16 @@ public class Reward {
 	private int id;
 	
 	@ManyToOne
-	@JoinColumn(name="project_id")
+	@JoinColumn(name="id_project")
 	private Project project;
 	
 	private String name;
 	private double amount;
 	private String description;
 	
+	@Column(name="estimateddelivery")
 	private Date estimatedDelivery;
+	@Column(name="limitavailability")
 	private boolean limitAvailability;
 	
 	public Reward(int id, Project project, String name, double amount, String description, Date estimatedDelivery,

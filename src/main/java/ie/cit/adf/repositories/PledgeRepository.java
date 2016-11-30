@@ -6,4 +6,5 @@ import ie.cit.adf.domain.Pledge;
 
 public interface PledgeRepository extends CrudRepository<Pledge, Integer>{
 
+	
 }

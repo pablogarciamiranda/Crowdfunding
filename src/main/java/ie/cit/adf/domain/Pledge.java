@@ -16,11 +16,11 @@ public class Pledge {
 	private int id;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="id_user")
 	private User user;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="reward_id")
+	@JoinColumn(name="id_reward")
 	private Reward reward;
 	
 	public Pledge(int id, User user, Reward reward) {
