@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 import java.util.Date;
 
-@Entity
+@Entity(name="Rewards")
 public class Reward {
 	
 	@Id

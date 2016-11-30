@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 
-@Entity
+@Entity(name="Projects")
 public class Project {
 	
 	@Id
