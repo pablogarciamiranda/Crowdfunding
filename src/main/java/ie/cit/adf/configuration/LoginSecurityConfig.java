@@ -1,5 +1,7 @@
 package ie.cit.adf.configuration;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -13,11 +15,13 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 @EnableWebSecurity
 public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
+	DataSource dataSource;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/").access("hasRole('ROLE_USER')")
-			.antMatchers("/").access("hasRole('ROLE_ADMIN')")
+			.antMatchers("/").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
 			.and()
 				.formLogin()
 				.loginPage("/login")
@@ -26,22 +30,13 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login?error")				
 			.and()
 				.logout()
-				.logoutSuccessUrl("/login?logout"); 
+				.logoutSuccessUrl("/login?logout");
 		
 	}
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("user").password("password").roles("USER")
-			.and()
-			.withUser("dodo").password("dodo").roles("ADMIN")
-			.and()
-			.withUser("pablo").password("pablo").roles("ADMIN")
-			.and()
-			.withUser("gonza").password("gonza").roles("ADMIN")
-			.and()
-			.withUser("josé").password("josé").roles("ADMIN");
+		auth.jdbcAuthentication().dataSource(dataSource);
 	}
 
 }

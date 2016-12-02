@@ -40,9 +40,10 @@ public class User {
 	private String email;
 	@Column(name="creditlimit")
 	private double creditLimit;
+	private boolean enabled;
 
 	public User(int id, String username, char[] password, String name, String location, String biography, String email,
-			double creditLimit, Collection<Project> projects_owned, Collection<Pledge> pledges) {
+			double creditLimit, Collection<Project> projects_owned, Collection<Pledge> pledges, Boolean enabled) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -54,6 +55,7 @@ public class User {
 		this.creditLimit = creditLimit;
 		this.projects_owned = projects_owned;
 		this.pledges = pledges;
+		this.enabled = enabled;
 	}
 
 	public User() {
@@ -138,6 +140,14 @@ public class User {
 
 	public void setPledges(List<Pledge> pledges) {
 		this.pledges = pledges;
+	}
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override
