@@ -1,3 +1,6 @@
+<%@ tag description="Structure of a basic page" pageEncoding="UTF-8"%>
+<%@ attribute name="title" required="false"%>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
