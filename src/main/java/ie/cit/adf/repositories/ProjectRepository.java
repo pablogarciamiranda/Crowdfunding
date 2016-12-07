@@ -11,6 +11,8 @@ import ie.cit.adf.domain.User;
 @Repository
 public interface ProjectRepository extends CrudRepository<Project, Integer>{
 
-	Collection<Project> findAllByOwners(User user);	
+	Collection<Project> findAllByOwners(User user);
+
+	Project findById(int id);	
 
 }

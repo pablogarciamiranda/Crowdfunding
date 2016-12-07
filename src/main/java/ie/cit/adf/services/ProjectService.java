@@ -23,4 +23,11 @@ public class ProjectService {
 		return projectRepository.findAllByOwners(user);
 	}
 	
+	public Project addProject(Project project){
+		return projectRepository.save(project);
+	}
+
+	public Project getById(int id) {
+		return projectRepository.findById(id);
+	}
 }
