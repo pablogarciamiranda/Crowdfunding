@@ -19,7 +19,9 @@
 		</bean>
 	</mvc:interceptors>
 	
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" >
+		<property name="defaultLocale" value="EN" />
+	</bean>
 
 	<security:http use-expressions="true">
 		<security:form-login login-page="/WEB-INF/views/login.jsp" />

@@ -15,7 +15,6 @@ public class InternationalizationConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public CookieLocaleResolver localeResolver() {
 	CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-	localeResolver.setDefaultLocale(Locale.ENGLISH);
 	return localeResolver;
 	}
 	

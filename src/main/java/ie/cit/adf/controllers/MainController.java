@@ -42,37 +42,7 @@ public class MainController {
 		model.addAttribute("projects", projects);
 		List<Project> ownProjects = (List<Project>) projectService.findProjectsOwned(user);
 		model.addAttribute("ownProjects", ownProjects);
-		System.out.println("OWN PROJECTS!!!!!!!!!!!!!!!!1");
-		for(Project p : ownProjects)
-			System.out.println(p);
-		System.out.println(" THE OTHER PROJECTS*************************");
-		for(Project p : projects)
-			System.out.println(p);
         return "main";
     }
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login( @RequestParam(value = "error", required = false) String error,
-							@RequestParam(value = "logout",	required = false) String logout,
-							HttpServletRequest request,
-							HttpServletResponse response) 
-	
-	{
-		
-		ModelAndView model = new ModelAndView();
-		if (error != null) {
-			model.addObject("error", "Invalid Credentials provided.");
-		}
-		if (logout != null) {
-			model.addObject("message", "Logged out successfully.");
-			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		    if (auth != null){    
-		        new SecurityContextLogoutHandler().logout(request, response, auth);
-		    }
-		}
-
-		model.setViewName("login");
-		return model;
-	}
 
 }
