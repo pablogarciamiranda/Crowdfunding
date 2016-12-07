@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Project</title>
+    
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/trust.css" rel="stylesheet"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+</head>
+<body th:with="project=${someExpression}" >
+
+	<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+      <div class="container">
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          
+            <li class="active"><a href="#" th:href="@{/}">Home</a></li>
+            <li><a href="#" th:href="@{/message}">My projects</a></li>
+            <li><a href="#" th:href="@{/task}">€</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+    		<li>
+              <a href="/login?logout" th:href="@{/logout}">Logout</a>
+            </li>  
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+	<nav class="navbar navbar-light bg-faded">
+  		<ul class="nav navbar-nav">
+  			<li class="nav-item">
+	      		<a href="/?lang=FR">French</a> | <a href="/?lang=EN">English</a>
+	    	</li>
+  
+  		</ul>
+	</nav>
+	
+	
+	<table class="table" th:with="project=${#}">
+				<tr>
+					<td>Project ID: </td>
+					<td>${project.id}</td>
+				</tr>
+				<tr>
+					<td>Category: </td>
+					<td>${project.category}</td>
+				</tr>
+				<tr>
+					<td>Name: </td>
+					<td>${project.name}</td>
+				</tr>
+				<tr>
+					<td>Location: </td>
+					<td>${project.location}</td>
+				</tr>
+				<tr>
+					<td>Description: </td>
+					<td>${project.description}</td>
+				</tr>
+				<tr>
+					<td>Current Amount: </td>
+					<td>${project.currentAmount}</td>
+				</tr>
+				<tr>
+					<td>Number of days: </td>
+					<td>${project.numberOfDays}</td>
+				</tr>
+				<tr>
+					<td>Daily price: </td>
+					<td>${project.}</td>
+				</tr>
+				
+				<tr>
+					<td>Funding amount: </td>
+					<td>${project.fundingAmount}</td>
+				</tr>
+			</table>
+	
+		<p> 
+			<form th:action="@{/#}" method="POST">
+				
+			
+			
+			</form>
+		</p>
+    
+</body>
+</html>

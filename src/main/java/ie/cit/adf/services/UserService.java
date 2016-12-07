@@ -3,12 +3,12 @@ package ie.cit.adf.services;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import ie.cit.adf.domain.Project;
 import ie.cit.adf.domain.User;
 import ie.cit.adf.repositories.UserRepository;
 
+@Service
 public class UserService {
 
 	@Autowired
@@ -32,6 +32,10 @@ public class UserService {
 	
 	public Collection<User> findAll(){
 		return (Collection<User>) userRepository.findAll();
+	}
+	
+	public User getByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 	
 //	public Collection<User> findOwners(Project project){

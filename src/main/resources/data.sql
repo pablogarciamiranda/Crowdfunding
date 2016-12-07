@@ -27,7 +27,8 @@ VALUES
 	
 INSERT INTO projects_owners (id_user, id_project)
 VALUES
-	(1, 1);
+	(1, 1),
+	(2, 1);
 	
 INSERT INTO projects_tags (id_tag, id_project)
 VALUES
@@ -43,5 +44,3 @@ INSERT INTO Pledges (id, id_user, id_reward)
 VALUES
 	(1, 1, 1),
 	(2, 1, 2);
-	
-	

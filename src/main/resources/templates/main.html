@@ -1,20 +1,129 @@
+
+<!-- # TO BE FILLED BY CORRESPONDING LINK TO CONTROLLERS -->
+
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Main Page</title>
-    <link href="css/bootstrap.css" rel="stylesheet"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-	<p>
-	
-	</p>
-	<p>
-		<a href="/?lang=FR">French</a> | <a href="/?lang=EN">English</a>
-		<br/>
-		<a href="/login?logout" th:text="#{login.logout}"></a>
-	</p>
-    <p th:text="#{main.hello} + ', ' + ${name}"/>
     
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <link href="css/trust.css" rel="stylesheet"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+</head>
+<!-- It sets the vars local scope to be taken(credit available and Projects active) -->
+<body th:with="credit=${credit}, projects=${projects}, ownProjects=${ownProjects}">
+
+	<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+      <div class="container">
+      
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" th:href="@{#}">Home</a></li>
+            <li th:if="${#lists.isEmpty(projects)}"><a href="#" th:href="@{#}" >My projects</a></li>
+            <li><a href="#" th:href="@{#}" onclick="document.getElementById('id01').style.display='block'" style="width:auto">Top Up</a></li>
+            <li><a th:text="'€' + ${credit}"></a></li>
+          </ul>
+          
+          <ul class="nav navbar-nav navbar-right">
+    		<li>
+              <a href="/login?logout" th:href="@{/login?logout}">Logout</a>
+            </li>  
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+
+	<nav class="navbar navbar-light bg-faded">
+  		<ul class="nav navbar-nav">
+  			<li class="nav-item">
+	      		<a href="/?lang=FR">French</a> | <a href="/?lang=EN">English</a>
+	    	</li>
+	    	
+	    	<li class="nav-item">
+	      		<a class="nav-link" href="#">Create a project</a>
+	    	</li>
+
+  		</ul>
+	</nav>
+	
+	<div id="id01" class="modal">
+	  
+	  <form class="modal-content animate" action="#">
+	
+	    <div class="container">
+	      <label><b>Top Up</b></label>
+	      <input type="text" placeholder="Enter € number" name="uname" required="required"/>
+	
+	      <button type="submit">Top Up</button>
+	    </div>
+	
+	    <div class="container" style="background-color:#f1f1f1">
+	      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+	    </div>
+	  </form>
+	</div>
+	
+	<div th:if="${not #lists.isEmpty(projects)}">
+	
+	
+		<table class="table" th:if="${not #lists.isEmpty(ownProjects)}">
+			
+					<tr>
+						<th>Number</th>
+						<th>Name</th>
+						<th>Amount to get</th>
+						<th>Amount achieved</th>
+					</tr>
+					
+					<tr th:each="project : ${projects}">
+				        <td></td>
+				        <td th:text="${project.name}" th:href="@{/project/list/${project.id}}">Name</td>
+				        <td th:text="${project.fundingAmount}">Amount to get</td>
+				        <td th:text="${project.currentAmount}">Amount achieved</td>
+	      			</tr>
+	
+		</table>
+	
+		<table class="table" th:if="${#lists.isEmpty(ownProjects)}">
+			
+					<tr>
+						<th>Number</th>
+						<th>Name</th>
+						<th>Amount to get</th>
+						<th>Amount achieved</th>
+					</tr>
+					
+					<tr th:each="project : ${ownProjects}">
+				        <td></td>
+				        <td th:text="${project.name}" th:href="@{/project/list/${project.id}}">Name</td>
+				        <td th:text="${project.fundingAmount}">Amount to get</td>
+				        <td th:text="${project.currentAmount}">Amount achieved</td>
+	      			</tr>
+	
+		</table>
+
+	</div>
+	
+	
+	
+	<p th:if="${ #lists.isEmpty(projects)}"> There aren't projects in the database </p>
+	
+	<script>
+	
+		// Get the modal
+		var modal = document.getElementById('id01');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+		    if (event.target == modal) {
+		        modal.style.display = "none";
+		    }
+		}
+		
+	</script>
+	
+	
 </body>
 </html>
