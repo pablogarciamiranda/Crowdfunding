@@ -199,8 +199,8 @@ public class Project {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Project [id=");
 		builder.append(id);
-		builder.append(", category=");
-		builder.append(category.getName());
+//		builder.append(", category=");
+//		builder.append(category.getName());
 		builder.append("), name=");
 		builder.append(name);
 		builder.append(", location=");
