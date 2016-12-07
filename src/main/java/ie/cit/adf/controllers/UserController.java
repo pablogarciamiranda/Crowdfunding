@@ -8,7 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +64,7 @@ public class UserController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/sign_up_success", method = RequestMethod.POST)
+	@RequestMapping(value = "/sign_up/success", method = RequestMethod.POST)
 	public ModelAndView save_user(@ModelAttribute("SpringWeb") User user,
 							HttpServletRequest request,
 							HttpServletResponse response) 
@@ -72,5 +75,53 @@ public class UserController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("login");
 		return model;
+	}
+	
+	@RequestMapping(value = "/update_user", method = RequestMethod.GET)
+	public String updateUser(Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		User user = userService.getByUsername(name);
+		model.addAttribute("user", user);
+		
+		return "updateUser";
+		
+	}
+	
+	@RequestMapping(value = "/update_user", method = RequestMethod.POST)
+	public String saveUserUpdate(Model model,
+			@ModelAttribute("SpringWeb") User userUpdated) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		User user = userService.getByUsername(name);
+		user.setLocation(userUpdated.getLocation());
+		user.setBiography(userUpdated.getBiography());
+		user.setEmail(userUpdated.getEmail());
+		userService.registerAccount(user);
+		
+		model.addAttribute("user", user);
+		
+		return "updateUser";
+		
+	}
+	
+	@RequestMapping(value = "/update_user/password", method = RequestMethod.GET)
+	public String updatePassword(Model model) {
+		return "updateUserPassword";
+	}
+	
+	@RequestMapping(value = "/update_user/password", method = RequestMethod.POST)
+	public String Password(Model model,
+			@ModelAttribute("SpringWeb") User userUpdated) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		User user = userService.getByUsername(name);
+		user.setPassword(userUpdated.getPassword());
+
+		userService.registerAccount(user);
+		
+		return "updateUserPassword";
 	}
 }

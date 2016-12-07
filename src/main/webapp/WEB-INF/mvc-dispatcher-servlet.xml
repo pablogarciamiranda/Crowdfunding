@@ -24,11 +24,6 @@
 	</bean>
 
 	<security:http use-expressions="true">
-		<security:form-login login-page="/WEB-INF/views/login.jsp" />
-		<security:intercept-url pattern="/account/edit*" access="hasRole('ROLE_ADMIN')" />
-		<security:intercept-url pattern="/accounts/account*" access="hasRole('ROLE_USER')" />
-		<security:intercept-url pattern="/accounts/**" access="isAuthenticated()" />
-		<security:logout />
 	</security:http>
 	
 	<security:authentification-manager>

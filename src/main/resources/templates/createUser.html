@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login Page</title>
+    <title>Signup Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="css/login.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
@@ -33,10 +33,10 @@
   
   	<h1 th:text="#{user.signup}"></h1>
 
-    <form class="login-form" th:action="@{/sign_up_success}" method="POST">
+    <form class="login-form" th:action="@{/sign_up/success}" method="POST">
       <input type="text" name="username" th:placeholder="#{user.username}"/>
       <input type="text" name="location" th:placeholder="#{user.location}"/>
-      <input type="text" name="biography" th:placeholder="#{user.biography}"/>
+      <textarea name="biography" th:placeholder="#{user.biography}" rows="5"></textarea>
       <input type="text" name="email" th:placeholder="#{user.email}"/>
       <input type="password"  name="password" th:placeholder="#{user.password}"/>
       <input type="submit" name="submit" th:value="#{user.save}" />
