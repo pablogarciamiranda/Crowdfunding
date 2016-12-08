@@ -6,17 +6,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ie.cit.adf.domain.Authority;
+
 import ie.cit.adf.domain.Project;
-import ie.cit.adf.domain.User;
-import ie.cit.adf.repositories.ProjectRepository;
 import ie.cit.adf.services.ProjectService;
 
 @Controller
@@ -51,18 +49,21 @@ public class ProjectController {
 	@RequestMapping(value = "/update_project", method = RequestMethod.GET)
 	public String updateProject(@RequestParam("id") int id, Model model) {
 		
+		
 		Project project = projectService.getById(id);
 		model.addAttribute("project", project);
+		model.addAttribute("id",id);
 		
 		return "updateProject";
 		
 	}
 	
-	@RequestMapping(value = "/update_project", method = RequestMethod.POST)
-	public String saveUserUpdate(@RequestParam("id") int id, Model model,
+	@RequestMapping(value = "/update_project/{id}", method = RequestMethod.POST)
+	public String saveUserUpdate(@PathVariable("id") int id, Model model,
 			 Project projectUpdated) {
 		
 		Project project = projectService.getById(id);
+		
 		project.setName(projectUpdated.getName());
 		project.setLocation(projectUpdated.getLocation());
 		project.setDescription(projectUpdated.getLocation());
@@ -70,9 +71,9 @@ public class ProjectController {
 		project.setNumberOfDays(projectUpdated.getNumberOfDays());
 		
 		projectService.addProject(project);
-
+		
 		model.addAttribute("project", project);
-		System.out.println(project);
-		return "updateProject";
+		
+		return "main";
 	}
 }
