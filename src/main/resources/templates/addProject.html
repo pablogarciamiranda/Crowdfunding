@@ -28,12 +28,21 @@
   	<h1 th:text="#{project.add}"></h1>
 
     <form class="projectAdd-form" th:action="@{/show_projects}" method="POST">
+      
+	  <div class="col-lg-3" th:object="${category}">
+	    <select class="form-control" id="category" name="category">
+	        <option value="0">Select a category</option>
+	        <option th:each="category : ${categories}"
+	                th:value="${category.id}"
+	                th:text="${category.name}"></option>
+	    </select>
+	  </div>
       <input type="text" name="name" th:placeholder="#{project.name}"/>
       <input type="text" name="location" th:placeholder="#{project.location}"/>
       <textarea name="description" th:placeholder="#{project.description}" rows="5"></textarea>
       <input type="text" name="fundingAmount" th:placeholder="#{project.fundingAmount}"/>
       <input type="text"  name="numberOfDays" th:placeholder="#{project.numberOfDays}"/>
-      <input type="submit" name="submit" th:value="#{project.edit}" />
+      <input type="submit" name="submit" th:value="#{project.add}" />
       
     </form>
   </div>

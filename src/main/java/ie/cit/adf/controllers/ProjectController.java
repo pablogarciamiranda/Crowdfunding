@@ -1,5 +1,7 @@
 package ie.cit.adf.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import ie.cit.adf.domain.Category;
 import ie.cit.adf.domain.Project;
+import ie.cit.adf.services.CategoryService;
 import ie.cit.adf.services.ProjectService;
 
 @Controller
@@ -24,11 +27,19 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 	
+	@Autowired
+	CategoryService categoryService;
+	
 	@RequestMapping(value = "/add_project", method = RequestMethod.GET)
 	public ModelAndView addProject(HttpServletRequest request,
 							HttpServletResponse response){
 		ModelAndView model = new ModelAndView();
+		
+		List<Category> categories = (List<Category>) categoryService.findAll();
+		model.addObject("categories", categories);
+		
 		model.setViewName("addProject");
+		
 		return model;
 	}
 	
@@ -42,7 +53,7 @@ public class ProjectController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("main");
 		
-		System.out.println(project);
+		System.out.println(project + project.getCategory().getName());
 		return model;
 	}
 	

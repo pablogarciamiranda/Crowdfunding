@@ -201,7 +201,7 @@ public class Project {
 		builder.append(id);
 //		builder.append(", category=");
 //		builder.append(category.getName());
-		builder.append("), name=");
+		builder.append(", name=");
 		builder.append(name);
 		builder.append(", location=");
 		builder.append(location);
