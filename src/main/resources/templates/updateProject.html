@@ -26,6 +26,15 @@
   	<h1 th:text="#{project.update}"></h1>
 
     <form class="projectUpdate-form" th:action="@{/update_project/} + ${id}" th:object="${project}" method="POST">
+      <div class="col-lg-3" th:object="${category}">
+	    <select class="form-control" id="category" name="category">
+	        <option value="0">Select a category</option>
+	        <option th:each="category : ${categories}"
+	                th:value="${category.id}"
+	                th:text="${category.name}"></option>
+	    </select>
+	  </div>
+      
       <label for="id" th:text="#{project.name}"></label>
       <input type="text" name="name" th:value="${project.name}"/>
       <label for="id" th:text="#{project.description}"></label>

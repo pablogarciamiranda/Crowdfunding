@@ -63,7 +63,10 @@ public class ProjectController {
 		
 		Project project = projectService.getById(id);
 		model.addAttribute("project", project);
-		model.addAttribute("id",id);
+		model.addAttribute("id", id);
+		
+		List<Category> categories = (List<Category>) categoryService.findAll();
+		model.addAttribute("categories", categories);
 		
 		return "updateProject";
 		
@@ -76,12 +79,15 @@ public class ProjectController {
 		Project project = projectService.getById(id);
 		
 		project.setName(projectUpdated.getName());
+		project.setCategory(projectUpdated.getCategory());
 		project.setLocation(projectUpdated.getLocation());
 		project.setDescription(projectUpdated.getLocation());
 		project.setFundingAmount(projectUpdated.getFundingAmount());
 		project.setNumberOfDays(projectUpdated.getNumberOfDays());
 		
+		
 		projectService.addProject(project);
+		System.out.println(project + project.getCategory().getName());
 		
 		model.addAttribute("project", project);
 		
