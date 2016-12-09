@@ -27,7 +27,7 @@
   
   	<h1 th:text="#{project.add}"></h1>
 
-    <form class="projectAdd-form" th:action="@{/}" method="POST">
+    <form class="projectAdd-form" th:action="@{/show_projects}" method="POST">
       <select class="form-control" id="category" name="category">
 	        <option value="0">Select a category</option>
 	        <option th:each="category : ${categories}"

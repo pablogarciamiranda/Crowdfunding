@@ -22,8 +22,10 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ie.cit.adf.domain.Category;
 import ie.cit.adf.domain.Project;
+import ie.cit.adf.domain.User;
 import ie.cit.adf.services.CategoryService;
 import ie.cit.adf.services.ProjectService;
+import ie.cit.adf.services.UserService;
 
 @Controller
 public class ProjectController {
@@ -34,6 +36,9 @@ public class ProjectController {
 	
 	@Autowired
 	CategoryService categoryService;
+	
+	@Autowired
+	UserService userService;
 
 	
 	@RequestMapping(value = "/add_project", method = RequestMethod.GET)
@@ -50,7 +55,7 @@ public class ProjectController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/show_projects", method = RequestMethod.POST)
 	public ModelAndView showProjectAdded(@ModelAttribute Project project,
 							HttpServletRequest request,
 							HttpServletResponse response, @RequestParam(value = "myProjects",	required = false) boolean myProjects){
@@ -60,6 +65,18 @@ public class ProjectController {
 		ModelAndView model = new ModelAndView();
 		model.setViewName("main");
 		model.addObject("myProjects", myProjects);
+		
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		model.addObject("name", name);
+		User user = userService.getByUsername(name);
+		double credit = user.getCreditLimit();
+		model.addObject("credit", credit);
+		List<Project> projects = (List<Project>) projectService.findAll();
+		model.addObject("projects", projects);
+		List<Project> ownProjects = (List<Project>) projectService.findProjectsOwned(user);
+		model.addObject("ownProjects", ownProjects);
 		
 		return model;
 	}
@@ -97,6 +114,17 @@ public class ProjectController {
 		
 		model.addAttribute("project", project);
 		model.addAttribute("myProjects", myProjects);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		model.addAttribute("name", name);
+		User user = userService.getByUsername(name);
+		double credit = user.getCreditLimit();
+		model.addAttribute("credit", credit);
+		List<Project> projects = (List<Project>) projectService.findAll();
+		model.addAttribute("projects", projects);
+		List<Project> ownProjects = (List<Project>) projectService.findProjectsOwned(user);
+		model.addAttribute("ownProjects", ownProjects);
 		
 		return "main";
 	}
