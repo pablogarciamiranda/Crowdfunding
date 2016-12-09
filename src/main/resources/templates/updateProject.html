@@ -25,7 +25,7 @@
   
   	<h1 th:text="#{project.update}"></h1>
 
-    <form class="login-form" th:action="@{/updateProject}" method="POST">
+    <form class="projectUpdate-form" th:action="@{/update_project/} + ${id}" th:object="${project}" method="POST">
       <label for="id" th:text="#{project.name}"></label>
       <input type="text" name="name" th:value="${project.name}"/>
       <label for="id" th:text="#{project.description}"></label>

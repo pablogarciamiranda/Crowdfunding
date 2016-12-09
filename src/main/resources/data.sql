@@ -11,9 +11,10 @@ VALUES
 	(4, 'Entrepreneurship'),
 	(5, 'Android');
 
-INSERT INTO Projects (id, id_category, name, location, description, fundingAmount, numberOfDays) 
+INSERT INTO Projects (id, id_category, name, location, description, fundingAmount, currentAmount, numberOfDays) 
 VALUES 
-	(1, 1, 'OnePlus 4', 'Cork', 'Test', 5000, 50);
+	(1, 1, 'OnePlus 4', 'Cork', 'Test', 5000, 1678.53, 50),
+	(2, 1, 'OnePlus 4T', 'Dublin', 'Testing', 6000, 0, 45);
 	
 INSERT INTO Users (id, username, password, location, biography, email, creditLimit, enabled)
 VALUES
@@ -28,12 +29,13 @@ VALUES
 INSERT INTO projects_owners (id_user, id_project)
 VALUES
 	(1, 1),
-	(2, 1);
+	(2, 2);
 	
 INSERT INTO projects_tags (id_tag, id_project)
 VALUES
 	(4, 1),
-	(5, 1);
+	(5, 1),
+	(5, 2);
 
 INSERT INTO Rewards (id, id_project, name, amount, description, estimatedDelivery, limitAvailability)
 VALUES

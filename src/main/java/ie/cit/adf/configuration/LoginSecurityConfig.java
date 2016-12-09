@@ -18,6 +18,7 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http.authorizeRequests()
 			.antMatchers("/").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
 			.antMatchers("/main").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
