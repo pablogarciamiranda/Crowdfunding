@@ -70,6 +70,7 @@ public class Project {
 	private String description;
 	private byte[] picture;
 	
+	@Column(name="currentamount")
 	private double currentAmount;
 	@Column(name="fundingamount")
 	private double fundingAmount;
