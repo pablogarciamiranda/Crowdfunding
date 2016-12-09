@@ -1,6 +1,8 @@
 package ie.cit.adf.controllers;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
+import ie.cit.adf.domain.Category;
 import ie.cit.adf.domain.Project;
+import ie.cit.adf.services.CategoryService;
 import ie.cit.adf.services.ProjectService;
 
 @Controller
@@ -28,11 +32,20 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 	
+	@Autowired
+	CategoryService categoryService;
+	
 	@RequestMapping(value = "/add_project", method = RequestMethod.GET)
 	public ModelAndView addProject(HttpServletRequest request,
 							HttpServletResponse response){
+		
 		ModelAndView model = new ModelAndView();
+		
+		List<Category> categories = (List<Category>) categoryService.findAll();
+		model.addObject("categories", categories);
+		
 		model.setViewName("addProject");
+		
 		return model;
 	}
 	
@@ -47,6 +60,7 @@ public class ProjectController {
 		model.setViewName("main");
 		
 		System.out.println(project);
+		
 		return model;
 	}
 	
@@ -56,7 +70,10 @@ public class ProjectController {
 		
 		Project project = projectService.getById(id);
 		model.addAttribute("project", project);
-		model.addAttribute("id",id);
+		model.addAttribute("id", id);
+		
+		List<Category> categories = (List<Category>) categoryService.findAll();
+		model.addAttribute("categories", categories);
 		
 		return "updateProject";
 		
@@ -69,6 +86,7 @@ public class ProjectController {
 		Project project = projectService.getById(id);
 		
 		project.setName(projectUpdated.getName());
+		project.setCategory(projectUpdated.getCategory());
 		project.setLocation(projectUpdated.getLocation());
 		project.setDescription(projectUpdated.getLocation());
 		project.setFundingAmount(projectUpdated.getFundingAmount());

@@ -16,7 +16,7 @@
 	      		<a href="/update_project?lang=EN">English</a>
 	    	</li>
 	    	<li class="nav-item">
-	      		<a href="/update_project?lang=ES">Espanol</a>
+	      		<a href="/update_project?lang=ES">Espaol</a>
 	    	</li>
 	    </ul>	
 	</nav>
@@ -26,6 +26,12 @@
   	<h1 th:text="#{project.update}"></h1>
 
     <form class="projectUpdate-form" th:action="@{/update_project/} + ${id}" th:object="${project}" method="POST">
+     <select class="form-control" id="category" name="category">
+	        <option value="0">Select a category</option>
+	        <option th:each="category : ${categories}"
+	                th:value="${category.id}"
+	                th:text="${category.name}"></option>
+	  </select>
       <label for="id" th:text="#{project.name}"></label>
       <input type="text" name="name" th:value="${project.name}"/>
       <label for="id" th:text="#{project.description}"></label>
