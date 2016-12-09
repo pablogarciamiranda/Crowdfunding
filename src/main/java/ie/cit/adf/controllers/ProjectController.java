@@ -34,6 +34,7 @@ public class ProjectController {
 	
 	@Autowired
 	CategoryService categoryService;
+
 	
 	@RequestMapping(value = "/add_project", method = RequestMethod.GET)
 	public ModelAndView addProject(HttpServletRequest request,
@@ -49,20 +50,20 @@ public class ProjectController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/?myProjects=true", method = RequestMethod.POST)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView showProjectAdded(@ModelAttribute Project project,
 							HttpServletRequest request,
-							HttpServletResponse response){
+							HttpServletResponse response, @RequestParam(value = "myProjects",	required = false) boolean myProjects){
 
 		projectService.addProject(project);
 		
 		ModelAndView model = new ModelAndView();
 		model.setViewName("main");
-		
-		System.out.println(project);
+		model.addObject("myProjects", myProjects);
 		
 		return model;
 	}
+
 	
 	@RequestMapping(value = "/update_project", method = RequestMethod.GET)
 	public String updateProject(@RequestParam("id") int id, Model model) {
@@ -81,7 +82,7 @@ public class ProjectController {
 	
 	@RequestMapping(value = "/update_project/{id}", method = RequestMethod.POST)
 	public String saveUserUpdate(@PathVariable("id") int id, Model model,
-			 Project projectUpdated) {
+			 Project projectUpdated, @RequestParam(value = "myProjects", required = false) boolean myProjects) {
 		
 		Project project = projectService.getById(id);
 		
@@ -95,6 +96,7 @@ public class ProjectController {
 		projectService.addProject(project);
 		
 		model.addAttribute("project", project);
+		model.addAttribute("myProjects", myProjects);
 		
 		return "main";
 	}
