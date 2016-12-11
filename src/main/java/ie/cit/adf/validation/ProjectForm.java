@@ -31,7 +31,7 @@ public class ProjectForm {
 	@NotNull
 	@Min(1)
 	@Max(7)
-	private BigDecimal fundingAmount;
+	private Double fundingAmount;
 	
 	@NotNull
 	@Min(1)
@@ -63,11 +63,11 @@ public class ProjectForm {
 		this.description = description;
 	}
 	
-	public BigDecimal getFundingAmount() {
+	public Double getFundingAmount() {
 		return fundingAmount;
 	}
 	
-	public void setFundingAmount(BigDecimal fundingAmount) {
+	public void setFundingAmount(Double fundingAmount) {
 		this.fundingAmount = fundingAmount;
 	}
 	

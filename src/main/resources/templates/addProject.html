@@ -1,25 +1,58 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Add Project</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="css/login.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-</head>
+    <title>Update Project Page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="../css/login.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/flag-icon.min.css" th:href="@{css/flag-icon.min.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script></head>
 <body>
-	<nav class="navbar navbar-light bg-faded">
-  		<ul class="nav navbar-nav">
-  			<li class="nav-item">
-	      		<a href="/add_project?lang=FR">French</a>
-	    	</li>
-	    	<li class="nav-item">
-	      		<a href="/add_project?lang=EN">English</a>
-	    	</li>
-	    	<li class="nav-item">
-	      		<a href="/add_project?lang=ES">Espanol</a>
-	    	</li>
-	    </ul>	
-	    
+
+	<nav class="navbar navbar-inverse" th:fragment="header">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#cfNavbar">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>                        
+	      </button>
+	      <a class="navbar-brand" href="/">CrowdFunding</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="cfNavbar">
+	      <ul class="nav navbar-nav">
+	        <li><a href="/" th:text="#{main.home}"></a></li>
+	        <li><a href="/?myProjects=true" th:href="@{/?myProjects=true}" th:text="#{main.my_projects}"></a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	      	<li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="#Language"><span th:text="#{main.language}"></span><span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li>
+		      		<a th:href="@{${baseUrl}(lang=FR)}"><span class="flag-icon flag-icon-fr"></span>	Français</a>
+		    	</li>
+		    	<li>
+		      		<a th:href="@{${baseUrl}(lang=EN)}"><span class="flag-icon flag-icon-gb"></span>	English</a>
+		    	</li>
+		    	<li>
+		      		<a th:href="@{${baseUrl}(lang=ES)}"><span class="flag-icon flag-icon-es"></span>	Español</a>
+		    	</li>
+		    	<!-- javascript:window.location.href=window.location.href -->
+	          </ul>
+	        </li>
+	      	<li class="dropdown">
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="#User"><span class="glyphicon glyphicon-user" th:text="' '+${name}"></span><span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	            <li><a href="/update_user" th:href="@{/update_user}" th:text="#{user.edit_user}"></a></li>
+	            <li><a href="/update_user/password" th:href="@{/update_user/password}" th:text="#{user.edit_password}"></a></li>
+	            <li><a href="/login?logout" th:href="@{/login?logout}"><span class="glyphicon glyphicon-log-out"></span><span th:text="' ' + #{main.log_out}"></span></a></li>
+	          </ul>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
 	</nav>
 	
 <div class="project-page">
@@ -27,18 +60,22 @@
   
   	<h1 th:text="#{project.add}"></h1>
 
-    <form class="projectAdd-form" th:action="@{/show_projects}" method="POST">
+    <form class="projectAdd-form" th:modelAttribute="project" th:action="@{/show_projects}" method="POST">
+    
       <select class="form-control" id="category" name="category">
 	        <option value="0">Select a category</option>
 	        <option th:each="category : ${categories}"
 	                th:value="${category.id}"
 	                th:text="${category.name}"></option>
 	  </select>
-      <input type="text" name="name" th:placeholder="#{project.name}"/>
-      <input type="text" name="location" th:placeholder="#{project.location}"/>
-      <textarea name="description" th:placeholder="#{project.description}" rows="5"></textarea>
-      <input type="text" name="fundingAmount" th:placeholder="#{project.fundingAmount}"/>
-      <input type="text"  name="numberOfDays" th:placeholder="#{project.numberOfDays}"/>
+	  <td th:if="${#fields.hasErrors('project.name')}" th:errors="*{project.name}">Name Error</td>
+      <input type="text" th:field="*{project.name}" th:placeholder="#{project.name}"/>
+      <input type="text" th:field="*{project.location}" th:placeholder="#{project.location}"/>
+      <textarea class = "width_fill" th:field="*{project.description}" th:placeholder="#{project.description}" rows="5"></textarea>
+      <td th:if="${#fields.hasErrors('project.fundingAmount')}" th:errors="*{project.fundingAmount}">Invalid Amount</td>
+      <input type="text" th:field="*{project.fundingAmount}" th:placeholder="#{project.fundingAmount}"/>      
+      <td th:if="${#fields.hasErrors('project.numberOfDays')}" th:errors="*{project.numberOfDays}">Invalid Amount</td>
+      <input type="text"  th:field="*{project.numberOfDays}" th:placeholder="#{project.numberOfDays}"/>
       <input type="submit" name="submit" th:value="#{project.save}" />
       
     </form>

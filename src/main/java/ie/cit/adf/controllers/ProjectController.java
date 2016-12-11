@@ -1,22 +1,20 @@
 package ie.cit.adf.controllers;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -42,49 +40,63 @@ public class ProjectController {
 
 	
 	@RequestMapping(value = "/add_project", method = RequestMethod.GET)
-	public ModelAndView addProject(HttpServletRequest request,
-							HttpServletResponse response){
-		
-		ModelAndView model = new ModelAndView();
-		
-		List<Category> categories = (List<Category>) categoryService.findAll();
-		model.addObject("categories", categories);
-		
-		model.setViewName("addProject");
-		
-		return model;
-	}
-	
-	@RequestMapping(value = "/show_projects", method = RequestMethod.POST)
-	public ModelAndView showProjectAdded(@ModelAttribute Project project,
-							HttpServletRequest request,
-							HttpServletResponse response, @RequestParam(value = "myProjects",	required = false) boolean myProjects){
-
-		projectService.addProject(project);
-		
-		ModelAndView model = new ModelAndView();
-		model.setViewName("main");
-		model.addObject("myProjects", myProjects);
-		
+	public String addProject(Model model){
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
-		model.addObject("name", name);
+		model.addAttribute("name", name);
 		User user = userService.getByUsername(name);
-		double credit = user.getCreditLimit();
-		model.addObject("credit", credit);
-		List<Project> projects = (List<Project>) projectService.findAll();
-		model.addObject("projects", projects);
-		List<Project> ownProjects = (List<Project>) projectService.findProjectsOwned(user);
-		model.addObject("ownProjects", ownProjects);
+		model.addAttribute("user", user);
 		
-		return model;
+		List<Category> categories = (List<Category>) categoryService.findAll();
+		model.addAttribute("categories", categories);
+		model.addAttribute("project", new Project());
+		return "addProject";
+	}
+	
+	@RequestMapping(value = "/show_projects", method = RequestMethod.POST)
+	public String showProjectAdded(@Valid Project project,
+			BindingResult result,
+			Model model, @RequestParam(value = "myProjects",	required = false) boolean myProjects){
+
+		if (result.hasErrors()) {
+			return "addProject";
+		}
+		
+		//Add the project to the current user of the system.
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		model.addAttribute("name", name);
+		User user = userService.getByUsername(name);
+		model.addAttribute("user", user);
+		List<User> owners = new ArrayList<User>();
+		owners.add(user);
+		project.setOwners(owners);
+		
+		projectService.addProject(project);
+		
+		model.addAttribute("myProjects", myProjects);
+		
+		
+		double credit = user.getCreditLimit();
+		model.addAttribute("credit", credit);
+		List<Project> projects = (List<Project>) projectService.findAll();
+		model.addAttribute("projects", projects);
+		List<Project> ownProjects = (List<Project>) projectService.findProjectsOwned(user);
+		model.addAttribute("ownProjects", ownProjects);
+		
+		return "main";
 	}
 
 	
 	@RequestMapping(value = "/update_project", method = RequestMethod.GET)
 	public String updateProject(@RequestParam("id") int id, Model model) {
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		model.addAttribute("name", name);
+		User user = userService.getByUsername(name);
+		model.addAttribute("user", user);
 		
 		Project project = projectService.getById(id);
 		model.addAttribute("project", project);

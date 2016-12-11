@@ -10,9 +10,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -65,6 +67,7 @@ public class Project {
 	)
 	private Collection<Tag> tags;
 
+	@NotEmpty
 	private String name;
 	private String location;
 	private String description;
@@ -72,14 +75,18 @@ public class Project {
 	
 	@Column(name="currentamount")
 	private double currentAmount;
+	
 	@Column(name="fundingamount")
-	private double fundingAmount;
+	@NotNull
+	private Double fundingAmount;
+	
+	@NotNull
 	@Column(name="numberofdays")
-	private int numberOfDays;
+	private Integer numberOfDays;
 	
 	public Project(int id, Collection<User> owners, Collection<Reward> rewards, Category category, Collection<Tag> tags, String name,
-			String location, String description, byte[] picture, double currentAmount, double fundingAmount,
-			int numberOfDays) {
+			String location, String description, byte[] picture, double currentAmount, Double fundingAmount,
+			Integer numberOfDays) {
 		super();
 		this.id = id;
 		this.owners = owners;
@@ -179,7 +186,7 @@ public class Project {
 		this.currentAmount = currentAmount;
 	}
 
-	public double getFundingAmount() {
+	public Double getFundingAmount() {
 		return fundingAmount;
 	}
 
@@ -187,11 +194,11 @@ public class Project {
 		this.fundingAmount = fundingAmount;
 	}
 
-	public int getNumberOfDays() {
+	public Integer getNumberOfDays() {
 		return numberOfDays;
 	}
 
-	public void setNumberOfDays(int numberOfDays) {
+	public void setNumberOfDays(Integer numberOfDays) {
 		this.numberOfDays = numberOfDays;
 	}
 
