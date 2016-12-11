@@ -30,6 +30,9 @@
 	
 	<div class="login-page">
   	<div class="form">
+  	
+  		<p th:if="${loginError}" class="error" th:text="#{login.loginError}">Wrong user or password</p>
+  		<p th:if="${logoutMessage}" class="error" th:text="#{login.logoutMessage}">Logout successfully</p>
 
 	    <form class="login-form" th:action="@{/login}" method="POST">
 	      <input type="text" name="username" placeholder="username"/>

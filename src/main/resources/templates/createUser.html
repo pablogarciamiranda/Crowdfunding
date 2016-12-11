@@ -33,12 +33,15 @@
   
   	<h1 th:text="#{user.signup}"></h1>
 
-    <form class="login-form" th:action="@{/sign_up/success}" method="POST">
-      <input type="text" name="username" th:placeholder="#{user.username}"/>
-      <input type="text" name="location" th:placeholder="#{user.location}"/>
-      <textarea name="biography" th:placeholder="#{user.biography}" rows="5"></textarea>
-      <input type="text" name="email" th:placeholder="#{user.email}"/>
-      <input type="password"  name="password" th:placeholder="#{user.password}"/>
+    <form class="login-form" th:modelAttribute="user" th:action="@{/sign_up}" method="POST">
+      <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}">Name Error</td>
+      <input type="text" th:field="*{user.username}" th:placeholder="#{user.username}"/>
+      <input type="text" th:field="*{user.location}" th:placeholder="#{user.location}"/>
+      <textarea class="width_fill" th:field="*{user.biography}" th:placeholder="#{user.biography}" rows="5"></textarea>
+      <td th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}">Name Error</td>
+      <input type="text" th:field="*{user.email}" th:placeholder="#{user.email}"/>
+      <td th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">Name Error</td>
+      <input type="password"  th:field="*{user.password}" th:placeholder="#{user.password}"/>
       <input type="submit" name="submit" th:value="#{user.save}" />
       
     </form>

@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 @Entity(name="Users")
@@ -31,12 +32,15 @@ public class User {
 	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<Pledge> pledges;
 	
+	@NotEmpty
 	private String username;
+	@NotEmpty
 	private char[] password;
 	
 	private String name;
 	private String location;
 	private String biography;
+	@NotEmpty
 	private String email;
 	@Column(name="creditlimit")
 	private double creditLimit;
