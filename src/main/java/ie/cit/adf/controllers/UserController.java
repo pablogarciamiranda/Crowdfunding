@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -45,7 +46,7 @@ public class UserController {
 		}
 		if (logout != null) {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		    if (auth != null){    
+		    if (auth != null && !(auth instanceof AnonymousAuthenticationToken)){    
 		        new SecurityContextLogoutHandler().logout(request, response, auth);
 				model.addObject("logoutMessage", true);
 		    }
@@ -101,7 +102,8 @@ public class UserController {
 		user.setBiography(userUpdated.getBiography());
 		user.setEmail(userUpdated.getEmail());
 		userService.registerAccount(user);
-		
+
+		model.addAttribute("success", true);		
 		model.addAttribute("user", user);
 		
 		return "updateUser";
@@ -110,16 +112,31 @@ public class UserController {
 	
 	@RequestMapping(value = "/update_user/password", method = RequestMethod.GET)
 	public String updatePassword(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName();
+		model.addAttribute("name", name);
+		User user = userService.getByUsername(name);
+		model.addAttribute("user", user);
 		return "updateUserPassword";
 	}
 	
 	@RequestMapping(value = "/update_user/password", method = RequestMethod.POST)
 	public String Password(Model model,
-			@ModelAttribute("SpringWeb") User userUpdated) {
+			@ModelAttribute("SpringWeb") User userUpdated,
+			BindingResult result) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
+		model.addAttribute("name", name);
 		User user = userService.getByUsername(name);
-		user.setPassword(userUpdated.getPassword());
+		
+		if (userUpdated.getPassword().length >= 4) {
+			user.setPassword(userUpdated.getPassword());
+			model.addAttribute("success", true);
+		} else {
+			model.addAttribute("error", true);
+		}
+		
+		model.addAttribute("user", user);
 
 		userService.registerAccount(user);
 		

@@ -23,7 +23,7 @@
 	    </div>
 	    <div class="collapse navbar-collapse" id="cfNavbar">
 	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="/" th:text="#{main.home}"></a></li>
+	        <li><a href="/" th:text="#{main.home}"></a></li>
 	        <li><a href="/?myProjects=true" th:href="@{/?myProjects=true}" th:text="#{main.my_projects}"></a></li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
@@ -31,13 +31,13 @@
 	          <a class="dropdown-toggle" data-toggle="dropdown" href="#Language"><span th:text="#{main.language}"></span><span class="caret"></span></a>
 	          <ul class="dropdown-menu">
 	            <li>
-		      		<a href="/update_user?lang=FR"><span class="flag-icon flag-icon-fr"></span>	Français</a>
+		      		<a th:href="@{${baseUrl}(lang=FR)}"><span class="flag-icon flag-icon-fr"></span>	Français</a>
 		    	</li>
 		    	<li>
-		      		<a href="/update_user?lang=EN"><span class="flag-icon flag-icon-gb"></span>	English</a>
+		      		<a th:href="@{${baseUrl}(lang=EN)}"><span class="flag-icon flag-icon-gb"></span>	English</a>
 		    	</li>
 		    	<li>
-		      		<a href="/update_user?lang=ES"><span class="flag-icon flag-icon-es"></span>	Español</a>
+		      		<a th:href="@{${baseUrl}(lang=ES)}"><span class="flag-icon flag-icon-es"></span>	Español</a>
 		    	</li>
 		    	<!-- javascript:window.location.href=window.location.href -->
 	          </ul>
@@ -46,6 +46,7 @@
 	          <a class="dropdown-toggle" data-toggle="dropdown" href="#User"><span class="glyphicon glyphicon-user" th:text="' '+${name}"></span><span class="caret"></span></a>
 	          <ul class="dropdown-menu">
 	            <li><a href="/update_user" th:href="@{/update_user}" th:text="#{user.edit_user}"></a></li>
+	            <li><a href="/update_user/password" th:href="@{/update_user/password}" th:text="#{user.edit_password}"></a></li>
 	            <li><a href="/login?logout" th:href="@{/login?logout}"><span class="glyphicon glyphicon-log-out"></span><span th:text="' ' + #{main.log_out}"></span></a></li>
 	          </ul>
 	        </li>
@@ -57,6 +58,8 @@
   <div class="form">
   
   	<h1 th:text="#{user.edit_user}"></h1>
+  	
+  	<p th:if="${success}" th:text="#{user.edit_user_success}">Success</p>
 
     <form class="login-form" th:action="@{/update_user}" method="POST">
       <label for="username" th:text="#{user.location}"></label>
