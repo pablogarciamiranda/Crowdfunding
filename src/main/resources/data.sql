@@ -12,8 +12,8 @@ VALUES
 	(5, 'Android');
 
 INSERT INTO Projects (id, id_category, name, location, description, fundingAmount, currentAmount, numberOfDays) 
-VALUES 
-	(1, 1, 'OnePlus 4', 'Cork', 'Test', 5000, 1678.53, 50),
+VALUES
+	(1, 1, 'OnePlus 4', 'Cork', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel lorem at justo sodales pulvinar nec nec eros. Proin eget nunc lacus. Nullam vulputate felis eget nibh pellentesque, et pulvinar justo dictum. Morbi imperdiet vestibulum leo et semper.', 5000, 1678.53, 50),
 	(2, 1, 'OnePlus 4T', 'Dublin', 'Testing', 6000, 0, 45);
 	
 INSERT INTO Users (id, username, password, location, biography, email, creditLimit, enabled)

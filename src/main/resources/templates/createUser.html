@@ -32,7 +32,7 @@
   <div class="form">
   
   	<h1 th:text="#{user.signup}"></h1>
-
+    
     <form class="login-form" th:modelAttribute="user" th:action="@{/sign_up}" method="POST">
       <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}">Name Error</td>
       <input type="text" th:field="*{user.username}" th:placeholder="#{user.username}"/>

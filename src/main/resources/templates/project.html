@@ -59,7 +59,8 @@
 	</nav>
 	
 	<div>
-		<img style="float:left;" src="I have no idea how to retrieve images" alt="Project image"></img>
+		<img id="projectImg" style="float:left;" th:src="@{data:image/png;base64,{image}(image=${project.picture})}" alt="Project image"></img>
+
 		<h1 th:text="${project.name}"><strong>Name</strong></h1>
 		
 		<div class="progress">
@@ -85,7 +86,7 @@
 		      			</tr>	
 			</table>
 			
-			<textarea th:text="${project.description}" readonly="readonly"></textarea>
+			<span th:text="${project.description}"></span>
 	</div>
 	
 </body>

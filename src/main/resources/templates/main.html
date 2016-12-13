@@ -27,6 +27,7 @@
 	      <ul class="nav navbar-nav">
 	        <li class="active"><a href="/" th:text="#{main.home}"></a></li>
 	        <li><a href="/?myProjects=true" th:href="@{/?myProjects=true}" th:text="#{main.my_projects}"></a></li>
+	        <li th:if="${myProjects}"><a href="/add_project" th:href="@{/add_project}" th:text="#{project.add}"></a></li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
 	      	<li class="dropdown">
@@ -81,6 +82,7 @@
 						<th th:text="#{main.name}">Name</th>
 						<th th:text="#{main.goal_amount}">Goal</th>
 						<th th:text="#{main.pledged_amount}">Amount pledged</th>
+						<th th:if="${myProjects}" th:text="#{main.operations}">Operations</th>
 					</tr>
 					
 					<tr th:each="project : ${( myProjects ? ownProjects : projects)}">
@@ -88,6 +90,17 @@
 				        <td><a th:text="${project.name}" th:href="@{/projects/{id}(id=${project.id})}">Name</a></td>
 				        <td th:text="${project.fundingAmount}">Amount to get</td>
 				        <td th:text="${project.currentAmount}">Amount pledged</td>
+				        	<a th:href="@{/update_project/{id}(id=${project.id})}" class="btn btn-default" th:text="#{project.edit}">Edit</a>
+				       		<a th:href="@{/?myProjects=true}" class="btn btn-default" th:text="#{project.delete}">Delete</a>
+				        <!--  
+				        	<form action="@{/update_project/{id}(id=${project.id})}" method="POST">
+    							<input type="submit" th:value="#{project.edit}"/>
+							</form>
+				        	<form action="" method="POST">
+    							<button type="submit" th:value="#{project.delete}">Delete</button>
+							</form>
+						-->
+				        </td>
 	      			</tr>	
 		</table>
 	</div>
