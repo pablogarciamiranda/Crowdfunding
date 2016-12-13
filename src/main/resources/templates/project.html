@@ -49,6 +49,7 @@
 	          <a class="dropdown-toggle" data-toggle="dropdown" href="#User"><span class="glyphicon glyphicon-user" th:text="' '+${name}"></span><span class="caret"></span></a>
 	          <ul class="dropdown-menu">
 	            <li><a href="/update_user" th:href="@{/update_user}" th:text="#{user.edit_user}"></a></li>
+	            <li><a href="/update_user/password" th:href="@{/update_user/password}" th:text="#{user.edit_password}"></a></li>
 	            <li><a href="/login?logout" th:href="@{/login?logout}"><span class="glyphicon glyphicon-log-out"></span><span th:text="' ' + #{main.log_out}"></span></a></li>
 	          </ul>
 	        </li>
@@ -59,6 +60,7 @@
 	
 	<div>
 		<img id="projectImg" style="float:left;" th:src="@{data:image/png;base64,{image}(image=${project.picture})}" alt="Project image"></img>
+
 		<h1 th:text="${project.name}"><strong>Name</strong></h1>
 		
 		<div class="progress">
